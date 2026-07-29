@@ -3,7 +3,8 @@
 <p align="center">
     <a href="https://inputtip.abgox.com">官网</a> |
     <a href="https://github.com/abgox/InputTip">Github</a> |
-    <a href="https://gitee.com/abgox/InputTip">Gitee</a>
+    <a href="https://gitee.com/abgox/InputTip">Gitee</a> |
+    <a href="https://gitcode.com/abgox/InputTip">Gitcode</a>
 </p>
 
 <p align="center">
@@ -42,13 +43,13 @@
   - **5 种提示方案**：[鼠标样式](https://inputtip.abgox.com/docs/tip/cursor) · [悬浮小窗](https://inputtip.abgox.com/docs/tip/overlay) · [光标符号](https://inputtip.abgox.com/docs/tip/symbol-caret) · [鼠标符号](https://inputtip.abgox.com/docs/tip/symbol-cursor) · [窗口边框](https://inputtip.abgox.com/docs/tip/border)
 - **规则调度（智能切换）**
   - **多维感知**：通过 `窗口匹配`、`动态热键`、`计时器`、`文本/热键监控` 等机制实时捕捉上下文
-  - **精准调度**：基于规则触发 `状态切换`、`键盘布局切换`、`热键注册/屏蔽`、`窗口置顶` 等特定行为
+  - **精准调度**：基于规则触发 `状态切换`、`键盘布局切换`、`热键注册/屏蔽`、`窗口置顶` 等指定行为
 
-_更多详情请参阅 [官方文档](https://inputtip.abgox.com/docs)_
+_更多详情请查看 [官网](https://inputtip.abgox.com)_
 
 ## 📅 新的变化
 
-请参阅 [更新日志](./src/CHANGELOG.md)
+请查看 [更新日志](./src/CHANGELOG.md)
 
 ## 🤝 相关项目
 
