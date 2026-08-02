@@ -377,7 +377,7 @@ checkIni() {
                 bw := w - g.MarginX * 2
 
                 g.AddButton("cRed w" bw, i18n("goToRepo")).OnEvent("Click", (*) => Run("https://github.com/abgox/InputTip"))
-                g.AddButton("w" bw, i18n("goToDonate")).OnEvent("Click", (*) => Run("https://www.abgox.com/donate"))
+                g.AddButton("w" bw, i18n("goToDonate")).OnEvent("Click", (*) => Run("https://me.abgox.com/donate"))
                 g.OnEvent("Close", (*) => (g.Destroy(), writeIni("version-" versionType, currentVersion)))
                 return g
             }

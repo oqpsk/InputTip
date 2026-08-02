@@ -2,9 +2,9 @@
 
 <p align="center">
     <a href="https://inputtip.abgox.com">官网</a> |
-    <a href="https://github.com/abgox/InputTip">Github</a> |
+    <a href="https://github.com/abgox/InputTip">GitHub</a> |
     <a href="https://gitee.com/abgox/InputTip">Gitee</a> |
-    <a href="https://gitcode.com/abgox/InputTip">Gitcode</a>
+    <a href="https://gitcode.com/abgox/InputTip">GitCode</a>
 </p>
 
 <p align="center">
@@ -69,10 +69,10 @@ _更多详情请查看 [官网](https://inputtip.abgox.com)_
 
 ## 💖 支持与赞助
 
-如果你喜欢这个项目，欢迎给它 Star ⭐️ 或 [赞赏 💰](https://www.abgox.com/donate)
+如果你喜欢这个项目，欢迎给它 Star ⭐️ 或 [赞赏 💰](https://me.abgox.com/donate)
 
 [![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
 
 ## 📄 License
 
-[AGPL-3.0](./LICENSE) © [abgox](https://www.abgox.com)
+[AGPL-3.0](./LICENSE) © [abgox](https://me.abgox.com)

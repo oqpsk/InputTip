@@ -122,7 +122,7 @@ langStrings.Set("en-US", Map(
         "2. Double-click a row in any table to edit, delete, or do other actions",
         "3. Left-click 🎨 in some color settings to set a color, right-click 🎨 to clear it",
         "4. It is highly recommended to read the " getDocsLink("guide", "User Guide") " and the doc links in each menu",
-        "5. If you find it useful, please give InputTip a " getLink("github.com/abgox/InputTip", "Star") " or " getLink("www.abgox.com/donate", "Donate") " to support the development",
+        "5. If you find it useful, please give InputTip a " getLink("github.com/abgox/InputTip", "Star") " or " getLink("me.abgox.com/donate", "Donate") " to support the development",
     ],
     "startup", "Launch at startup",
     "startup.task", "Task Scheduler",

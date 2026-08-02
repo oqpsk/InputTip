@@ -4,7 +4,7 @@ PackageIdentifier: abgox.InputTip
 PackageVersion: $version
 PackageLocale: zh-CN
 Publisher: abgox
-PublisherUrl: https://abgox.com
+PublisherUrl: https://me.abgox.com
 PublisherSupportUrl: https://inputtip.abgox.com/docs/issues
 Author: abgox
 PackageName: InputTip

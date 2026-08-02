@@ -122,7 +122,7 @@ langStrings.Set("zh-CN", Map(
         "2. 左键双击表格中的行可以进行编辑、删除或其他操作",
         "3. 左键单击颜色配置中的🎨设置颜色，右键单击🎨清除颜色",
         "4. 强烈建议先查看 " getDocsLink("guide", "使用指南") " 以及各个配置菜单中相关的文档链接",
-        "5. 如果觉得好用，请给 InputTip 点个 " getLink("github.com/abgox/InputTip", "Star") " 或通过 " getLink("www.abgox.com/donate", "赞赏") " 以支持开发工作",
+        "5. 如果觉得好用，请给 InputTip 点个 " getLink("github.com/abgox/InputTip", "Star") " 或通过 " getLink("me.abgox.com/donate", "赞赏") " 以支持开发工作",
     ],
     "startup", "开机自启动",
     "startup.task", "任务计划程序",

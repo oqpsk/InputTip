@@ -15,7 +15,7 @@ e_about(*) {
 
         renderBoldText(g, "about.info")
         g.AddLink(, i18n("about.version") getLink("inputtip.abgox.com/download", currentVersion))
-        g.AddLink(, i18n("about.developer") getLink("www.abgox.com", author))
+        g.AddLink(, i18n("about.developer") getLink("me.abgox.com", author))
 
         renderBoldText(g, "about.status")
         g.AddLink(, i18n("about.type") getLink("inputtip.abgox.com/docs/zip-vs-exe", versionType))
@@ -29,7 +29,7 @@ e_about(*) {
         g.AddLink(, getLink("github.com/abgox/InputTip"))
         g.AddLink(, getLink("gitee.com/abgox/InputTip"))
 
-        g.AddButton("xs w" w, i18n("donate")).OnEvent("Click", (*) => Run("https://www.abgox.com/donate"))
+        g.AddButton("xs w" w, i18n("donate")).OnEvent("Click", (*) => Run("https://me.abgox.com/donate"))
 
         return g
     }
