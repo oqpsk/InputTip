@@ -1,6 +1,7 @@
 ; InputTip
 
 #Include chinese-script.ahk
+#Include jev-control.ahk
 
 try {
     keyCount := readIni(FormatTime(, "yyyy-MM-dd"), 0, "DailyKeystrokes", statsFile)
@@ -53,6 +54,7 @@ loadConfig() {
         inputMethodDetectionMode: readIni("inputMethodDetectionMode", "general"),
         checkUpdateOnStartup: allowUpstreamUpdates() ? readIni("checkUpdateOnStartup", 1) : 0,
         chineseScriptEnabled: readIni("chineseScriptEnabled", 0),
+        jevControlEnabled: readIni("jevControlEnabled", 0),
         chineseScriptTraditionalKey: readIni("chineseScriptTraditionalKey", "Ctrl+Shift+F11"),
         chineseScriptSimplifiedKey: readIni("chineseScriptSimplifiedKey", "Ctrl+Shift+F12"),
         ; 当运行 zip 版本时，是否直接以管理员权限运行
@@ -223,6 +225,16 @@ loadConfig() {
         }
         defaultSymbolMap.Set("default-triangle-" stateVal.%v%.colorText ".png", 1)
     }
+    ; New overlay-only states inherit existing CN styling without rewriting it.
+    ; CN/EN rule matching, cursors, borders and exported state remain compatible.
+    if var.HasOwnProp("overlayTextCN") {
+        for state in ["CN_S", "CN_T"] {
+            for prefix in ["overlayText", "overlayTextFont", "overlayTextSize", "overlayTextWeight", "overlayTransparent", "overlayBgColor", "overlayTextColor", "overlayBasePosition", "overlayOffsetX", "overlayOffsetY"] {
+                fallback := prefix == "overlayText" ? (var.overlayTextCN == "" ? "" : i18n("jevControl.text." state)) : var.%prefix "CN"%
+                var.%prefix state% := readIni(prefix state, fallback)
+            }
+        }
+    }
 }
 
 loadConfig()
@@ -245,6 +257,7 @@ switchTriggerKeyList := [
     "switchKeyboardJP", "switchKeyboardJPHiragana", "switchKeyboardJPKatakana", "switchKeyboardJPHalfKana", "switchKeyboardJPFullAlpha", "switchKeyboardJPHalfAlpha",
     "switchKeyboardKR", "switchKeyboardKRHangul", "switchKeyboardKRAlpha",
     "setChineseScriptTraditional", "setChineseScriptSimplified",
+    "setJevTraditional", "setJevSimplified",
 ]
 allTriggerKeyList.Push(switchTriggerKeyList.Clone()*)
 
@@ -297,6 +310,8 @@ runTriggers(triggers, *) {
             case "switchKeyboardKRAlpha": switchKeyboard("KR", 1, 0)
             case "setChineseScriptTraditional": requestChineseScript("traditional")
             case "setChineseScriptSimplified": requestChineseScript("simplified")
+            case "setJevTraditional": JevControl.Queue("zh_hant")
+            case "setJevSimplified": JevControl.Queue("zh_hans")
             case "toggle": toggleApp()
             case "pause": suspendApp()
             case "resume": resumeApp()
@@ -322,7 +337,7 @@ runTriggers(triggers, *) {
 }
 
 conflictGroups := Map(
-    "chineseScript", ["setChineseScript"],
+    "chineseScript", ["setChineseScript", "setJev"],
     "switchState", ["switchState"],
     "switchKeyboard", ["switchKeyboard"],
     "ignore", ["ignore"],

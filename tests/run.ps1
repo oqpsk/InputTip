@@ -33,6 +33,7 @@ foreach ($name in @('InputTip.ahk', 'InputTip.updater.ahk', 'InputTip.JAB.JetBra
     Invoke-Ahk (Join-Path $repo "src\$name") -Validate
 }
 Invoke-Ahk (Join-Path $PSScriptRoot 'chinese-script.ahk')
+Invoke-Ahk (Join-Path $PSScriptRoot 'jev-control.ahk')
 $fixtureDir = Join-Path ([IO.Path]::GetTempPath()) ('InputTip-tests-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $fixtureDir | Out-Null
 Invoke-Ahk (Join-Path $PSScriptRoot 'rules.ahk') ('"' + (Join-Path $fixtureDir 'config.ini') + '"')

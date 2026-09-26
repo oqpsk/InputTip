@@ -3,7 +3,7 @@
 updateOverlay()
 
 hideOverlay() {
-    for v in stateList {
+    for v in jevOverlayStates() {
         i := var.screenNum
         while i > 0 {
             try var.%"overlayGui" v i%.Hide()
@@ -13,6 +13,7 @@ hideOverlay() {
 }
 
 showOverlay(state) {
+    state := JevControl.DisplayState(state)
     hideOverlay()
 
     if var.%"overlayText" state% == ""
@@ -145,7 +146,7 @@ showOverlay(state) {
 }
 
 updateOverlay() {
-    for state in stateList {
+    for state in jevOverlayStates() {
         text := var.%"overlayText" state%
         textFont := var.%"overlayTextFont" state%
         textSize := var.%"overlayTextSize" state%
@@ -182,7 +183,9 @@ updateOverlay() {
 
 e_overlay(*) {
     showGui(createUniqueGui(overlayStyleGui, var.overlayCornerPreference))
-    overlayStyleGui(info) {
+}
+
+overlayStyleGui(info) {
         g := createGuiOpt(i18n("overlay"))
 
         if info.i {
@@ -194,7 +197,7 @@ e_overlay(*) {
 
         ctrlList := []
 
-        tab := renderTab(g, [i18n("basicConfig"), i18n("basicConfig") 2, i18n("stateStyle"), i18n("stateStyle") 2, i18n("stateStyle") 3])
+        tab := renderTab(g, [i18n("basicConfig"), i18n("basicConfig") 2, i18n("stateStyle"), i18n("jevControl.styles"), i18n("stateStyle") 3, i18n("stateStyle") 4])
         loseFocusOnTab(tab)
         tab.UseTab(1)
         g.AddLink("Section", getDocsLink("tip/overlay"))
@@ -298,7 +301,7 @@ e_overlay(*) {
             posValueMap.Set(v, text)
             posList[i] := text
         }
-        for i, v in stateList {
+        for i, v in jevOverlayStates() {
             if Mod(i - 1, 2) == 0 {
                 tab.UseTab(((i - 1) // 2) + 3)
                 opt := "Section"
@@ -306,7 +309,7 @@ e_overlay(*) {
                 opt := "xs"
             }
 
-            renderBoldText(g, v, opt)
+            renderBoldText(g, v == "CN" ? "jevControl.unknown" : v, opt)
             _ := renderEditLabel(g, "overlayText" v, "w" bw / 3, "overlayText")
             ctrlList.Push(_.edit)
             _ := renderEditLabel(g, "overlayOffsetX" v, "Limit5 w" bw / 10, "overlayOffsetX", "yp")
@@ -340,5 +343,4 @@ e_overlay(*) {
         if !var.overlayActive
             disableCtrl(ctrlList)
         return g
-    }
 }

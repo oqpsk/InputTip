@@ -31,6 +31,9 @@ addRule(id, process, trigger) {
 }
 
 assert(!var.chineseScriptEnabled, "feature defaults off")
+assert(!var.jevControlEnabled, "Jev API defaults off")
+assert(getConflictGroup("setJevTraditional") == getConflictGroup("setChineseScriptSimplified"), "API and hotkey script actions conflict")
+assert(getConflictGroup("setJevTraditional") == getConflictGroup("setJevSimplified"), "opposite API actions conflict")
 assert(!var.checkUpdateOnStartup, "upstream updater defaults off")
 assert(var.chineseScriptTraditionalKey == "Ctrl+Shift+F11", "traditional default")
 assert(var.chineseScriptSimplifiedKey == "Ctrl+Shift+F12", "simplified default")
@@ -74,4 +77,11 @@ parseWindowRule()
 assert(var.WindowRule["setChineseScriptTraditional"].Has("FixtureGame.exe"), "rules survive second reload")
 assert(IniRead(configFile, "Hotkey.Rule.20260926.4", "trigger") == "setChineseScriptTraditional", "hotkey rule retained")
 FileAppend("PASS: " checks " rules/config/i18n checks`n", "*")
+addRule(5, "FixtureJev.exe", "setJevTraditional")
+loadConfig()
+parseWindowRule()
+hasProcessChange := true, exeProcess := "FixtureJev.exe"
+triggers := returnTriggers()
+assert(triggers.Length == 1 && triggers[1] == "setJevTraditional", "exact API action supersedes legacy fallback")
+FileAppend("PASS: Jev rule parsing and priority`n", "*")
 ExitApp(0)
