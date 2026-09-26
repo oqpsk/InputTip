@@ -2,13 +2,13 @@
 chineseScriptKeys() {
     keys := []
     loop 12
-        keys.Push("Ctrl+Alt+F" A_Index)
+        keys.Push("Ctrl+Shift+F" A_Index)
     return keys
 }
 
 chineseScriptSequence(key) {
-    if RegExMatch(key, "^Ctrl\+Alt\+(F(?:[1-9]|1[0-2]))$", &match)
-        return "^!{" match[1] "}"
+    if RegExMatch(key, "^Ctrl\+Shift\+(F(?:[1-9]|1[0-2]))$", &match)
+        return "^+{" match[1] "}"
     return ""
 }
 

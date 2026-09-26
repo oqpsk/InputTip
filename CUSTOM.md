@@ -7,8 +7,8 @@
 
 | InputTip 动作 | 默认按键 | 输入法需要执行 |
 | --- | --- | --- |
-| 字符集切换 - 强制繁体 | Ctrl+Alt+F11 | `traditionalization = true` |
-| 字符集切换 - 强制简体 | Ctrl+Alt+F12 | `traditionalization = false` |
+| 字符集切换 - 强制繁体 | Ctrl+Shift+F11 | `traditionalization = true` |
+| 字符集切换 - 强制简体 | Ctrl+Shift+F12 | `traditionalization = false` |
 
 重复执行必须保持同一状态，不能使用 toggle。原来的 Ctrl+Shift+F 可继续手动切换。
 输入法应消费这两个按键，正常同步简繁状态、失效旧候选并刷新候选；不应更改中英文模式、提交未完成的输入或切换输入法。
@@ -18,12 +18,12 @@
 ```yaml
 patch:
   key_binder/bindings/+:
-    - { when: always, accept: Control+Alt+F11, set_option: traditionalization }
-    - { when: always, accept: Control+Alt+F12, unset_option: traditionalization }
+    - { when: always, accept: Control+Shift+F11, set_option: traditionalization }
+    - { when: always, accept: Control+Shift+F12, unset_option: traditionalization }
 ```
 
 也可以由输入法后端原生处理固定状态按键。此仓库不安装或修改任何输入法配置。
-设置界面允许选择 Ctrl+Alt+F1～F12；两边必须使用同一套按键，两个目标不能使用相同按键。
+设置界面允许选择 Ctrl+Shift+F1～F12；两边必须使用同一套按键，两个目标不能使用相同按键。
 
 ## InputTip 设置
 
@@ -66,7 +66,7 @@ git push origin feature/chinese-script
 `tests/run.ps1` 使用项目随附的 AutoHotkey v2.0.26（运行时不纳入 Git），执行：
 
 - 主程序、updater、JAB 的加载/语法验证，不启动主程序。
-- 41 项按键、定时、重复触发、焦点取消、超时和更新策略测试，发送器为测试替身，不向桌面发键。
+- 43 项按键、定时、重复触发、焦点取消、超时和更新策略测试，发送器为测试替身，不向桌面发键。
 - 30 项真实 INI 读写、规则解析/优先级、重复加载和中英文文案测试。
 - 中英文原生设置窗口的隐藏创建与控件检查。
 

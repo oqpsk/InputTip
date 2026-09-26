@@ -53,8 +53,8 @@ loadConfig() {
         inputMethodDetectionMode: readIni("inputMethodDetectionMode", "general"),
         checkUpdateOnStartup: allowUpstreamUpdates() ? readIni("checkUpdateOnStartup", 1) : 0,
         chineseScriptEnabled: readIni("chineseScriptEnabled", 0),
-        chineseScriptTraditionalKey: readIni("chineseScriptTraditionalKey", "Ctrl+Alt+F11"),
-        chineseScriptSimplifiedKey: readIni("chineseScriptSimplifiedKey", "Ctrl+Alt+F12"),
+        chineseScriptTraditionalKey: readIni("chineseScriptTraditionalKey", "Ctrl+Shift+F11"),
+        chineseScriptSimplifiedKey: readIni("chineseScriptSimplifiedKey", "Ctrl+Shift+F12"),
         ; 当运行 zip 版本时，是否直接以管理员权限运行
         runCodeWithAdmin: readIni("runCodeWithAdmin", 0),
         ; 默认输入法状态，在自定义模式下，如果所有规则都不匹配，则返回此默认状态
