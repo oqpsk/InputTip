@@ -189,6 +189,8 @@ e_inputMethod(*) {
         renderDDLGroup(g, "chineseScriptTraditionalKey", chineseScriptKeys())
         renderDDLGroup(g, "chineseScriptSimplifiedKey", chineseScriptKeys())
         g.AddText("xs w" bw, i18n("chineseScript.caution"))
+        renderRadioGroup(g, "jevControlEnabled", [["yes", 1], ["no", 0]])
+        g.AddText("xs w" bw, i18n("jevControl.help"))
 
         return g
     }

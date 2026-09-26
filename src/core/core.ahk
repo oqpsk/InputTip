@@ -88,7 +88,8 @@ if isJAB {
 } else {
     loop {
         Sleep(var.pollInterval)
-        if A_TimeIdle > leaveDelay
+        try JevControl.Pump(WinExist("A"))
+        if A_TimeIdle > leaveDelay && !(var.jevControlEnabled && (JevControl.wanted || JevControl.DisplayState(currentState) != lastInputState))
             continue
 
         if var._paused {
@@ -235,7 +236,8 @@ if isJAB {
 
         loadCursor(currentState)
         if var.overlayActive {
-            if currentState != lastInputState || (var.overlayReshowOnTitleChange && hasTitleChange) || (var.overlayReshowOnClassChange && hasClassChange) || (var.overlayReshowOnProcessChange && hasProcessChange) {
+            overlayState := JevControl.DisplayState(currentState)
+            if overlayState != lastInputState || (var.overlayReshowOnTitleChange && hasTitleChange) || (var.overlayReshowOnClassChange && hasClassChange) || (var.overlayReshowOnProcessChange && hasProcessChange) {
                 if (!var.overlayShowOnMaximized && exeMaximized) || (!var.overlayShowOnFullscreen && exeFullscreen) || (!var.overlayShowOnNormal && exeNormal) {
                     hideOverlay()
                 } else {
@@ -248,7 +250,7 @@ if isJAB {
                             showOverlay(currentState)
                     }
                 }
-                lastInputState := currentState
+                lastInputState := overlayState
             }
         }
 
