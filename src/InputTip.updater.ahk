@@ -2,6 +2,12 @@
 
 #NoTrayIcon
 
+#Include core\fork-policy.ahk
+if !allowUpstreamUpdates() {
+    MsgBox(forkUpdateNotice(), "InputTip custom")
+    ExitApp()
+}
+
 #Include core\manifest.ahk
 
 ;@Ahk2Exe-SetMainIcon temp\icon\default-app.ico

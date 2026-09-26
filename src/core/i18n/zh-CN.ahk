@@ -67,6 +67,13 @@ langStrings.Set("zh-CN", Map(
     "trigger.switchKeyboardKR", "键盘切换 - 韩文",
     "trigger.switchKeyboardKRHangul", "键盘切换 - 韩文 (한)",
     "trigger.switchKeyboardKRAlpha", "键盘切换 - 韩文 (A)",
+    "trigger.setChineseScriptTraditional", "字符集切换 - 强制繁体",
+    "trigger.setChineseScriptSimplified", "字符集切换 - 强制简体",
+    "chineseScriptEnabled", "启用简繁规则（需先配置输入法）",
+    "chineseScriptTraditionalKey", "强制繁体按键",
+    "chineseScriptSimplifiedKey", "强制简体按键",
+    "chineseScript.help", "先在 Rime 中将两个不同按键分别绑定到 set_option: traditionalization 和 unset_option: traditionalization，再启用此功能。",
+    "chineseScript.caution", "仅向当前中文输入法发送按键，不读取简繁状态。不能使用 toggle 绑定。两个按键相同时不执行。保留 Ctrl+Shift+F 供手动切换。",
     "trigger.toggle", "应用控制 - 暂停/恢复",
     "trigger.pause", "应用控制 - 暂停",
     "trigger.resume", "应用控制 - 恢复",
@@ -144,7 +151,8 @@ langStrings.Set("zh-CN", Map(
     "inputMethod", "输入法相关",
     "inputMethod.tab", [
         "基础配置",
-        "自定义"
+        "自定义",
+        "简繁控制"
     ],
     "inputMethodDetectionMode", "中文输入法的状态识别模式",
     "inputMethodDetectionMode.general", "通用",

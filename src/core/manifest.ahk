@@ -2,6 +2,8 @@
 
 #Requires AutoHotkey v2.0
 
+#Include fork-policy.ahk
+
 runtimeVersion := "2.0.26.0"
 if A_IsCompiled
     versionType := "exe", currentVersion := "3.6.12"

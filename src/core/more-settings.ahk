@@ -40,6 +40,12 @@ e_moreSettings(*) {
                 g.w := w := info.w
                 g.bw := bw := w - g.MarginX * 2
 
+                if !allowUpstreamUpdates() {
+                    g.AddText("xs w" bw, forkUpdateNotice())
+                    g.AddLink("xs", '<a href="https://github.com/oqpsk/InputTip/tree/feature/chinese-script">oqpsk/InputTip · custom branch</a>')
+                    return g
+                }
+
                 renderRadioGroup(g, "checkUpdateOnStartup", [
                     ["yes", 1, (key, value, *) => (changeConfig(key, value), runUpdater())],
                     ["no", 0]

@@ -2,6 +2,8 @@
 
 e_inputMethod(*) {
     showGui(createUniqueGui(inputModeGui))
+}
+
     inputModeGui(info) {
         g := createGuiOpt(i18n("inputMethod"))
         tab := renderTab(g, i18n("inputMethod.tab", 1))
@@ -181,6 +183,12 @@ e_inputMethod(*) {
             return colList
         }
 
+        tab.UseTab(3)
+        g.AddText("xs w" bw, i18n("chineseScript.help"))
+        renderRadioGroup(g, "chineseScriptEnabled", [["yes", 1], ["no", 0]])
+        renderDDLGroup(g, "chineseScriptTraditionalKey", chineseScriptKeys())
+        renderDDLGroup(g, "chineseScriptSimplifiedKey", chineseScriptKeys())
+        g.AddText("xs w" bw, i18n("chineseScript.caution"))
+
         return g
     }
-}

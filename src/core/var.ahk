@@ -1,5 +1,7 @@
 ; InputTip
 
+#Include chinese-script.ahk
+
 try {
     keyCount := readIni(FormatTime(, "yyyy-MM-dd"), 0, "DailyKeystrokes", statsFile)
     if !keyCount {
@@ -49,7 +51,10 @@ loadConfig() {
         launchAtStartup: readIni("launchAtStartup", 0),
         ; 输入法模式
         inputMethodDetectionMode: readIni("inputMethodDetectionMode", "general"),
-        checkUpdateOnStartup: readIni("checkUpdateOnStartup", 1),
+        checkUpdateOnStartup: allowUpstreamUpdates() ? readIni("checkUpdateOnStartup", 1) : 0,
+        chineseScriptEnabled: readIni("chineseScriptEnabled", 0),
+        chineseScriptTraditionalKey: readIni("chineseScriptTraditionalKey", "Ctrl+Alt+F11"),
+        chineseScriptSimplifiedKey: readIni("chineseScriptSimplifiedKey", "Ctrl+Alt+F12"),
         ; 当运行 zip 版本时，是否直接以管理员权限运行
         runCodeWithAdmin: readIni("runCodeWithAdmin", 0),
         ; 默认输入法状态，在自定义模式下，如果所有规则都不匹配，则返回此默认状态
@@ -239,6 +244,7 @@ switchTriggerKeyList := [
     "switchKeyboardCN", "switchKeyboardUS",
     "switchKeyboardJP", "switchKeyboardJPHiragana", "switchKeyboardJPKatakana", "switchKeyboardJPHalfKana", "switchKeyboardJPFullAlpha", "switchKeyboardJPHalfAlpha",
     "switchKeyboardKR", "switchKeyboardKRHangul", "switchKeyboardKRAlpha",
+    "setChineseScriptTraditional", "setChineseScriptSimplified",
 ]
 allTriggerKeyList.Push(switchTriggerKeyList.Clone()*)
 
@@ -289,6 +295,8 @@ runTriggers(triggers, *) {
             case "switchKeyboardKR": switchKeyboard("KR")
             case "switchKeyboardKRHangul": switchKeyboard("KR", 1, 1)
             case "switchKeyboardKRAlpha": switchKeyboard("KR", 1, 0)
+            case "setChineseScriptTraditional": requestChineseScript("traditional")
+            case "setChineseScriptSimplified": requestChineseScript("simplified")
             case "toggle": toggleApp()
             case "pause": suspendApp()
             case "resume": resumeApp()
@@ -314,6 +322,7 @@ runTriggers(triggers, *) {
 }
 
 conflictGroups := Map(
+    "chineseScript", ["setChineseScript"],
     "switchState", ["switchState"],
     "switchKeyboard", ["switchKeyboard"],
     "ignore", ["ignore"],

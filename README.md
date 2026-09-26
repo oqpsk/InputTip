@@ -1,5 +1,7 @@
 <h1 align="center">✨<a href="https://inputtip.abgox.com">InputTip</a>✨</h1>
 
+> 自用简繁规则分支：参见 [定制说明、输入法按键约定与上游维护](CUSTOM.md)。本分支暂停上游自动覆盖更新。
+
 <p align="center">
     <a href="https://inputtip.abgox.com">官网</a> |
     <a href="https://github.com/abgox/InputTip">GitHub</a> |
