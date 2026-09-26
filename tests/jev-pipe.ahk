@@ -5,9 +5,9 @@
 OnError((err, *) => (FileAppend(err.Message " at " err.File ":" err.Line "`n", "**"), ExitApp(1)))
 Call(payload) {
     request := JevPipeRequest(A_Args[1], payload)
-    endTick := A_TickCount + 2000
+    endTick := jevTick() + 2000
     while !request.Poll() {
-        if A_TickCount > endTick
+        if jevTick() > endTick
             throw Error("IPC stuck")
         Sleep(1)
     }
@@ -25,13 +25,13 @@ if reply["result"] != "ok" || reply["changed"]
 cache := JevStateCache()
 loop 25 {
     reply := Call('{"v":1,"op":"query","hwnd":65552}')
-    if !cache.Accept(reply, 65552, A_TickCount) || cache.State("CN", 65552, A_TickCount) != "CN_T"
+    if !cache.Accept(reply, 65552, jevTick()) || cache.State("CN", 65552, jevTick()) != "CN_T"
         throw Error("Polling traditional state")
 }
 request := JevPipeRequest(A_Args[2], '{"v":1,"op":"query"}', 60)
-endTick := A_TickCount + 1500
+endTick := jevTick() + 1500
 while !request.Poll() {
-    if A_TickCount > endTick
+    if jevTick() > endTick
         throw Error("Cancellation stuck")
     Sleep(1)
 }
@@ -42,18 +42,18 @@ class FixtureControl extends JevControl {
 }
 var := {jevControlEnabled: 1, _paused: 0}
 FixtureControl.hwnd := 65552
-FixtureControl.wanted := {hwnd: 65552, mode: "zh_hans", until: A_TickCount + 5000, openAt: 0, epoch: FixtureControl.epoch}
-endTick := A_TickCount + 3000
+FixtureControl.wanted := {hwnd: 65552, mode: "zh_hans", until: jevTick() + 5000, openAt: 0, epoch: FixtureControl.epoch}
+endTick := jevTick() + 3000
 loop {
     FixtureControl.Pump(65552)
-    if !FixtureControl.wanted && FixtureControl.cache.State("EN", 65552, A_TickCount) == "CN_S"
+    if !FixtureControl.wanted && FixtureControl.cache.State("EN", 65552, jevTick()) == "CN_S"
         break
-    if A_TickCount >= endTick
+    if jevTick() >= endTick
         throw Error("Pump did not finish query/set/confirm")
     Sleep(1)
 }
 ; A rapid away/back must discard a queued target even with the same HWND.
-FixtureControl.wanted := {hwnd: 65552, mode: "zh_hant", until: A_TickCount + 5000, epoch: FixtureControl.epoch}
+FixtureControl.wanted := {hwnd: 65552, mode: "zh_hant", until: jevTick() + 5000, epoch: FixtureControl.epoch}
 FixtureControl.FocusChanged(), FixtureControl.FocusChanged()
 FixtureControl.Pump(65552)
 if FixtureControl.wanted

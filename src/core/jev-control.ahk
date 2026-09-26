@@ -1,4 +1,5 @@
 ; Jev Control.v1: asynchronous local IPC. No polling process or synthetic keys.
+jevTick() => DllCall("GetTickCount64", "Int64")
 class JevJSON {
     static Parse(text) {
         if StrLen(text) > 65536
@@ -98,7 +99,7 @@ class JevJSON {
 class JevPipeRequest {
     done := false, aborted := false, reply := "", h := -1, event := 0, serverPID := 0
     __New(name, payload, timeout := 900, expectedPID := 0) {
-        this.deadline := A_TickCount + timeout
+        this.deadline := jevTick() + timeout
         this.h := DllCall("CreateFileW", "str", name, "uint", 0xC0000000, "uint", 0, "ptr", 0,
             "uint", 3, "uint", 0x40000000, "ptr", 0, "ptr")
         if this.h == -1 {
@@ -145,7 +146,7 @@ class JevPipeRequest {
     Poll() {
         if this.done
             return true
-        if A_TickCount >= this.deadline
+        if jevTick() >= this.deadline
             this.Cancel()
         n := 0
         ok := DllCall("GetOverlappedResult", "ptr", this.h, "ptr", this.ov, "uint*", &n, "int", 0)
@@ -238,7 +239,7 @@ class JevControl {
         if this.inflight
             this.inflight.Cancel()
         this.hwnd := hwnd, this.cache.Clear()
-        this.wanted := {hwnd: hwnd, mode: mode, until: A_TickCount + 10000, openAt: 0, epoch: this.epoch}
+        this.wanted := {hwnd: hwnd, mode: mode, until: jevTick() + 10000, openAt: 0, epoch: this.epoch}
         ; Uses InputTip's existing per-window language switch. It cannot select
         ; a particular Chinese TSF profile; the pipe must confirm Jev afterward.
         if (IME.GetKeyboardLayout(IME.GetFocusedWindow()) & 0xFF) != 0x04
@@ -286,7 +287,7 @@ class JevControl {
             if this.inflight && this.inflight.op != "cancel"
                 this.inflight.Cancel()
         }
-        if this.wanted && (this.wanted.hwnd != hwnd || this.wanted.epoch != this.epoch || A_TickCount >= this.wanted.until)
+        if this.wanted && (this.wanted.hwnd != hwnd || this.wanted.epoch != this.epoch || jevTick() >= this.wanted.until)
             this.CancelTarget()
         if this.inflight {
             if !this.inflight.Poll()
@@ -302,7 +303,7 @@ class JevControl {
                     reply := JevJSON.Parse(request.reply)
                     if reply["v"] == 1 && reply["request_id"] == request.id && reply["op"] == request.op {
                         this.lastResult := reply["result"]
-                        this.cache.Accept(reply, hwnd, A_TickCount)
+                        this.cache.Accept(reply, hwnd, jevTick())
                         if request.op == "set" {
                             this.wanted := 0
                             if reply["result"] == "pending"
@@ -313,7 +314,7 @@ class JevControl {
                     }
                 }
             }
-            this.nextPoll := A_TickCount + 200
+            this.nextPoll := jevTick() + 200
         }
         if this.inflight
             return
@@ -321,7 +322,7 @@ class JevControl {
             id := this.cancelID, root := this.cancelHwnd ? this.cancelHwnd : hwnd
             this.cancelID := 0, this.cancelHwnd := 0
             this.Request("cancel", root, ',"pending_id":' id)
-        } else if enabled && hwnd && A_TickCount >= this.nextPoll {
+        } else if enabled && hwnd && jevTick() >= this.nextPoll {
             this.Request("query", hwnd)
         }
     }
@@ -329,10 +330,10 @@ class JevControl {
         if !this.wanted || this.wanted.hwnd != hwnd || reply["target"]["hwnd"] != hwnd || !reply["jev"]["active"]
             return
         if !reply["jev"]["keyboard_open"] {
-            if reply["jev"]["thread_focus"] && reply["jev"]["document_focus"] && !reply["jev"]["input_disabled"] && A_TickCount - this.wanted.openAt >= 500 {
+            if reply["jev"]["thread_focus"] && reply["jev"]["document_focus"] && !reply["jev"]["input_disabled"] && jevTick() - this.wanted.openAt >= 500 {
                 if (WinExist("A") & 0xFFFFFFFF) == hwnd {
                     IME.SetOpenStatus(true, IME.GetFocusedWindow())
-                    this.wanted.openAt := A_TickCount
+                    this.wanted.openAt := jevTick()
                 }
             }
             return
@@ -342,7 +343,7 @@ class JevControl {
     static DisplayState(base) {
         if !var.jevControlEnabled || var._paused
             return base
-        return this.cache.State(base, WinExist("A") & 0xFFFFFFFF, A_TickCount)
+        return this.cache.State(base, WinExist("A") & 0xFFFFFFFF, jevTick())
     }
 }
 
